@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vikesh Kumar | Cloud Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Clash+Display:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --bg:#060c1a;
+      --bg2:#091120;
+      --card:#0d1830;
+      --card-h:#102040;
+      --cyan:#00e5ff;
+      --violet:#8b5cf6;
+      --green:#10f5a0;
+      --orange:#ff6b35;
+      --text:#dde6f0;
+      --muted:#7a95b0;
+      --border:rgba(0,229,255,0.13);
+      --glow:rgba(0,229,255,0.06);
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
+
+    /* ──────────── SCROLLBAR ──────────── */
+    ::-webkit-scrollbar{width:6px;}
+    ::-webkit-scrollbar-track{background:var(--bg);}
+    ::-webkit-scrollbar-thumb{background:var(--cyan);border-radius:3px;}
+
+    /* ──────────── NAV ──────────── */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:200;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:.9rem 5rem;
+      background:rgba(6,12,26,0.8);
+      backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--border);
+      transition:padding .3s;
+    }
+    .nav-logo{
+      font-size:1.5rem;font-weight:700;
+      color:var(--cyan);letter-spacing:3px;
+      font-family:'DM Sans',sans-serif;
+    }
+    .nav-logo span{color:var(--violet);}
+    .nav-links{display:flex;gap:2.5rem;align-items:center;}
+    .nav-links a{
+      color:var(--muted);text-decoration:none;
+      font-size:.875rem;font-weight:500;letter-spacing:.3px;
+      transition:color .25s;position:relative;
+    }
+    .nav-links a:hover{color:var(--cyan);}
+    .nav-links a::after{
+      content:'';position:absolute;bottom:-5px;left:0;
+      width:0;height:1.5px;background:var(--cyan);
+      transition:width .25s;
+    }
+    .nav-links a:hover::after{width:100%;}
+    .nav-hire{
+      padding:.5rem 1.4rem;
+      background:linear-gradient(135deg,var(--cyan),var(--violet));
+      color:#060c1a;font-weight:700;font-size:.82rem;
+      border-radius:100px;text-decoration:none;
+      letter-spacing:.5px;transition:opacity .2s,transform .2s;
+    }
+    .nav-hire:hover{opacity:.85;transform:scale(1.04);}
+
+    /* ──────────── HERO ──────────── */
+    #home{
+      min-height:100vh;
+      display:flex;align-items:center;justify-content:center;
+      padding:7rem 5rem 4rem;
+      position:relative;overflow:hidden;
+    }
+    .bg-grid{
+      position:absolute;inset:0;
+      background-image:
+        linear-gradient(rgba(0,229,255,0.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,229,255,0.025) 1px,transparent 1px);
+      background-size:60px 60px;
+    }
+    .bg-glow1{
+      position:absolute;top:-10%;right:-5%;
+      width:700px;height:700px;
+      background:radial-gradient(ellipse,rgba(139,92,246,.12) 0%,transparent 65%);
+      pointer-events:none;
+    }
+    .bg-glow2{
+      position:absolute;bottom:-10%;left:-5%;
+      width:600px;height:600px;
+      background:radial-gradient(ellipse,rgba(0,229,255,.08) 0%,transparent 65%);
+      pointer-events:none;
+    }
+
+    .hero-wrap{
+      display:grid;grid-template-columns:1.1fr 1fr;
+      gap:5rem;align-items:center;
+      max-width:1150px;width:100%;
+      position:relative;z-index:1;
+    }
+
+    .hero-left{}
+    .hero-tag{
+      display:inline-flex;align-items:center;gap:.5rem;
+      padding:.35rem 1rem;
+      background:rgba(0,229,255,.08);
+      border:1px solid rgba(0,229,255,.25);
+      border-radius:100px;
+      font-size:.75rem;color:var(--cyan);
+      font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
+      margin-bottom:1.5rem;
+    }
+    .hero-tag span{
+      width:6px;height:6px;
+      background:var(--cyan);border-radius:50%;
+      animation:pulse 2s infinite;
+    }
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(1.5);}}
+
+    .hero-name{
+      font-family:'DM Sans',sans-serif;
+      font-size:4.2rem;font-weight:700;
+      line-height:1.05;margin-bottom:.75rem;
+    }
+    .hero-name .first{color:var(--text);}
+    .hero-name .last{
+      background:linear-gradient(120deg,var(--cyan) 0%,var(--violet) 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    }
+    .hero-role{
+      font-size:1.1rem;color:var(--muted);font-weight:400;
+      margin-bottom:1.2rem;letter-spacing:.2px;
+    }
+    .hero-role b{color:var(--cyan);font-weight:600;}
+
+    .hero-stats{
+      display:flex;gap:2rem;margin-bottom:2rem;padding:1.2rem 1.5rem;
+      background:var(--card);border:1px solid var(--border);
+      border-radius:14px;
+    }
+    .stat{display:flex;flex-direction:column;gap:.15rem;}
+    .stat-num{font-size:1.5rem;font-weight:700;color:var(--cyan);}
+    .stat-label{font-size:.72rem;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;}
+    .stat-div{width:1px;background:var(--border);}
+
+    .hero-desc{
+      font-size:.9rem;color:var(--muted);line-height:1.85;
+      margin-bottom:2rem;max-width:500px;
+    }
+
+    .hero-btns{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem;}
+    .btn-cta{
+      display:inline-flex;align-items:center;gap:.5rem;
+      padding:.75rem 1.8rem;
+      background:linear-gradient(135deg,var(--cyan),var(--violet));
+      color:#060c1a;font-weight:700;font-size:.875rem;
+      border-radius:10px;text-decoration:none;
+      transition:transform .2s,box-shadow .2s;
+    }
+    .btn-cta:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,229,255,.25);}
+    .btn-ghost{
+      display:inline-flex;align-items:center;gap:.5rem;
+      padding:.75rem 1.8rem;
+      background:transparent;border:1px solid var(--border);
+      color:var(--text);font-weight:600;font-size:.875rem;
+      border-radius:10px;text-decoration:none;
+      transition:all .2s;
+    }
+    .btn-ghost:hover{border-color:var(--cyan);color:var(--cyan);}
+
+    .hero-socials{display:flex;gap:.75rem;}
+    .soc-btn{
+      display:flex;align-items:center;gap:.5rem;
+      padding:.5rem 1rem;
+      background:var(--card);border:1px solid var(--border);
+      border-radius:8px;text-decoration:none;color:var(--muted);
+      font-size:.8rem;font-weight:500;
+      transition:all .25s;
+    }
+    .soc-btn:hover{border-color:var(--cyan);color:var(--cyan);}
+    .soc-btn svg{width:16px;height:16px;fill:currentColor;flex-shrink:0;}
+
+    /* ──────────── PHOTO CIRCLE ──────────── */
+    .hero-right{display:flex;justify-content:center;align-items:center;}
+    .photo-container{position:relative;width:360px;height:360px;}
+
+    /* Outer dashed orbit ring */
+    .orbit{
+      position:absolute;inset:-28px;
+      border-radius:50%;
+      border:1.5px dashed rgba(0,229,255,.2);
+      animation:spinSlow 20s linear infinite;
+    }
+    @keyframes spinSlow{to{transform:rotate(360deg);}}
+    .orbit-dot{
+      position:absolute;width:10px;height:10px;
+      background:var(--cyan);border-radius:50%;
+      box-shadow:0 0 8px var(--cyan);
+      top:50%;left:-5px;transform:translateY(-50%);
+    }
+
+    /* Gradient spinning ring border */
+    .photo-ring{
+      position:absolute;inset:0;border-radius:50%;
+      background:conic-gradient(var(--cyan),var(--violet),var(--green),var(--cyan));
+      animation:spinRing 6s linear infinite;
+      padding:3px;
+    }
+    @keyframes spinRing{to{transform:rotate(360deg);}}
+    .photo-ring-inner{
+      width:100%;height:100%;
+      border-radius:50%;background:var(--bg);
+    }
+
+    /* ==========================================
+       HERO PHOTO - Vikesh Kumar Profile Picture
+       Photo is placed here inside the circle
+       object-position: center top - face centered
+       ========================================== */
+    .hero-img{
+      position:absolute;
+      inset:8px;
+      border-radius:50%;
+      object-fit:cover;
+      /* Face is at center-top of the image */
+      object-position:center 10%;
+      width:calc(100% - 16px);
+      height:calc(100% - 16px);
+      z-index:2;
+    }
+    /* ==========================================
+       END PHOTO SECTION
+       ========================================== */
+
+    .float-badge{
+      position:absolute;
+      background:var(--card);border:1px solid var(--border);
+      border-radius:12px;padding:.6rem 1rem;
+      display:flex;align-items:center;gap:.5rem;
+      backdrop-filter:blur(10px);
+      white-space:nowrap;font-size:.78rem;font-weight:600;
+      animation:float 3s ease-in-out infinite;
+      z-index:3;
+    }
+    .float-badge.b1{bottom:-10px;left:-30px;animation-delay:0s;}
+    .float-badge.b2{top:-5px;right:-25px;animation-delay:1.5s;}
+    .float-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+    @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+
+    /* ──────────── ABOUT STRIP ──────────── */
+    .about-strip{
+      background:var(--card);
+      border-top:1px solid var(--border);
+      border-bottom:1px solid var(--border);
+      padding:2.5rem 5rem;
+    }
+    .about-inner{
+      max-width:1150px;margin:0 auto;
+      display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+      gap:3rem;align-items:center;
+    }
+    .about-text p{font-size:.9rem;color:var(--muted);line-height:1.8;}
+    .about-metric{text-align:center;}
+    .metric-num{font-size:2rem;font-weight:700;color:var(--cyan);}
+    .metric-label{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+
+    /* ──────────── SECTION BASE ──────────── */
+    section{padding:6rem 5rem;}
+    .si{max-width:1150px;margin:0 auto;}
+    .sec-eyebrow{
+      font-size:.7rem;letter-spacing:3px;color:var(--cyan);
+      font-weight:700;text-transform:uppercase;margin-bottom:.4rem;
+    }
+    .sec-title{
+      font-family:'DM Sans',sans-serif;font-size:2.3rem;font-weight:700;
+      margin-bottom:3rem;
+    }
+    .sec-title span{
+      background:linear-gradient(120deg,var(--cyan),var(--violet));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    }
+
+    /* ──────────── SKILLS ──────────── */
+    #skills{background:var(--bg2);}
+    .skills-outer{display:flex;flex-direction:column;gap:2rem;}
+    .skill-row{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:18px;padding:1.8rem 2rem;
+      display:flex;gap:2rem;align-items:flex-start;
+      transition:box-shadow .3s,transform .3s;
+    }
+    .skill-row:hover{
+      box-shadow:0 10px 30px rgba(0,229,255,.08);
+      transform:translateX(4px);
+    }
+    .skill-row-icon{
+      width:44px;height:44px;flex-shrink:0;
+      border-radius:10px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.25rem;
+    }
+    .skill-row-body{flex:1;}
+    .skill-row-title{font-weight:700;font-size:.95rem;margin-bottom:.75rem;color:var(--text);}
+    .tags{display:flex;flex-wrap:wrap;gap:.5rem;}
+    .tag{
+      padding:.3rem .85rem;font-size:.78rem;
+      border-radius:100px;border:1px solid;
+      font-weight:500;
+    }
+    .tag-cyan{background:rgba(0,229,255,.07);border-color:rgba(0,229,255,.2);color:var(--cyan);}
+    .tag-violet{background:rgba(139,92,246,.08);border-color:rgba(139,92,246,.25);color:#c4b5fd;}
+    .tag-green{background:rgba(16,245,160,.06);border-color:rgba(16,245,160,.2);color:var(--green);}
+    .tag-orange{background:rgba(255,107,53,.07);border-color:rgba(255,107,53,.22);color:var(--orange);}
+    .tag-grey{background:rgba(122,149,176,.07);border-color:rgba(122,149,176,.2);color:var(--muted);}
+
+    /* ──────────── EXPERIENCE ──────────── */
+    #experience{background:var(--bg);}
+    .exp-block{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:22px;padding:2.5rem;
+      position:relative;overflow:hidden;
+    }
+    .exp-block::before{
+      content:'';position:absolute;top:0;left:0;bottom:0;width:4px;
+      background:linear-gradient(to bottom,var(--cyan),var(--violet));
+    }
+    .exp-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;flex-wrap:wrap;gap:.75rem;}
+    .exp-left{}
+    .exp-co{font-size:1.2rem;font-weight:700;color:var(--cyan);margin-bottom:.2rem;}
+    .exp-designation{
+      display:inline-flex;align-items:center;gap:.4rem;
+      font-size:.85rem;font-weight:600;color:var(--text);
+      background:rgba(0,229,255,.07);border:1px solid rgba(0,229,255,.18);
+      padding:.25rem .85rem;border-radius:100px;margin-top:.3rem;
+    }
+    .exp-right{
+      display:flex;flex-direction:column;align-items:flex-end;gap:.4rem;
+    }
+    .exp-duration{
+      background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.25);
+      color:#c4b5fd;font-size:.78rem;font-weight:600;
+      padding:.3rem .9rem;border-radius:100px;
+    }
+    .exp-location{font-size:.78rem;color:var(--muted);}
+    .exp-divider{height:1px;background:var(--border);margin:1.2rem 0;}
+    .exp-list{padding-left:1.3rem;}
+    .exp-list li{
+      font-size:.875rem;color:var(--muted);
+      margin-bottom:.55rem;line-height:1.75;
+    }
+    .exp-list li::marker{color:var(--cyan);}
+    .exp-chips{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.2rem;}
+
+    /* ──────────── PROJECTS ──────────── */
+    #projects{background:var(--bg2);}
+    .proj-grid{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;
+    }
+    .proj-card{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:20px;padding:2rem;
+      display:flex;flex-direction:column;gap:1rem;
+      position:relative;overflow:hidden;
+      transition:transform .3s,box-shadow .3s,border-color .3s;
+    }
+    .proj-card:hover{
+      transform:translateY(-5px);
+      box-shadow:0 16px 40px rgba(0,229,255,.1);
+      border-color:rgba(0,229,255,.25);
+    }
+    .proj-card::after{
+      content:'';position:absolute;top:0;left:0;right:0;height:2px;
+    }
+    .proj-card.c1::after{background:linear-gradient(90deg,var(--cyan),var(--violet));}
+    .proj-card.c2::after{background:linear-gradient(90deg,var(--violet),var(--green));}
+    .proj-num{
+      font-size:.7rem;color:var(--muted);letter-spacing:2px;
+      font-weight:700;text-transform:uppercase;
+    }
+    .proj-name{font-size:1.05rem;font-weight:700;color:var(--text);}
+    .proj-chips{display:flex;flex-wrap:wrap;gap:.4rem;}
+    .proj-list{padding-left:1.2rem;flex:1;}
+    .proj-list li{
+      font-size:.845rem;color:var(--muted);
+      margin-bottom:.45rem;line-height:1.7;
+    }
+    .proj-list li::marker{color:var(--green);}
+    .proj-impact{
+      display:flex;gap:.75rem;flex-wrap:wrap;
+      border-top:1px solid var(--border);
+      padding-top:1rem;
+    }
+    .impact-chip{
+      font-size:.75rem;font-weight:700;
+      padding:.3rem .75rem;border-radius:8px;
+    }
+    .ic1{background:rgba(16,245,160,.1);color:var(--green);}
+    .ic2{background:rgba(255,107,53,.1);color:var(--orange);}
+    .ic3{background:rgba(0,229,255,.1);color:var(--cyan);}
+
+    /* ──────────── EDUCATION ──────────── */
+    #education{background:var(--bg);}
+    .edu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;}
+    .edu-card{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:18px;padding:2rem;
+      display:flex;gap:1.25rem;align-items:flex-start;
+      transition:all .3s;
+    }
+    .edu-card:hover{box-shadow:0 8px 24px rgba(0,229,255,.08);border-color:rgba(0,229,255,.25);}
+    .edu-icon{
+      width:48px;height:48px;flex-shrink:0;
+      border-radius:12px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.4rem;
+    }
+    .edu-body{}
+    .edu-deg{font-weight:700;font-size:.95rem;margin-bottom:.2rem;}
+    .edu-inst{font-size:.83rem;color:var(--cyan);font-weight:600;margin-bottom:.35rem;}
+    .edu-meta{font-size:.8rem;color:var(--muted);line-height:1.6;}
+    .edu-gpa{
+      display:inline-block;margin-top:.5rem;
+      padding:.2rem .7rem;
+      background:rgba(16,245,160,.08);border:1px solid rgba(16,245,160,.2);
+      border-radius:100px;font-size:.75rem;font-weight:700;color:var(--green);
+    }
+
+    /* ──────────── CONTACT ──────────── */
+    #contact{background:var(--bg2);}
+    .contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:3.5rem;}
+    .contact-left{}
+    .contact-sub{
+      font-size:.9rem;color:var(--muted);line-height:1.85;margin-bottom:2rem;
+    }
+    .clinks{display:flex;flex-direction:column;gap:.9rem;}
+    .clink{
+      display:flex;align-items:center;gap:1rem;
+      padding:1rem 1.25rem;
+      background:var(--card);border:1px solid var(--border);
+      border-radius:14px;text-decoration:none;color:var(--text);
+      transition:all .25s;
+    }
+    .clink:hover{border-color:var(--cyan);color:var(--cyan);transform:translateX(4px);}
+    .clink-icon{
+      width:38px;height:38px;border-radius:10px;flex-shrink:0;
+      display:flex;align-items:center;justify-content:center;
+      font-size:.95rem;
+    }
+    .clink-info{}
+    .clink-label{font-size:.7rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:600;}
+    .clink-val{font-size:.875rem;font-weight:600;}
+
+    .contact-form{display:flex;flex-direction:column;gap:1.1rem;}
+    .fg{display:flex;flex-direction:column;gap:.4rem;}
+    .fg label{font-size:.72rem;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+    .fg input,.fg textarea{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:12px;padding:1rem 1.2rem;
+      color:var(--text);font-family:inherit;font-size:.875rem;
+      transition:border-color .25s,box-shadow .25s;resize:vertical;
+      outline:none;
+    }
+    .fg input:focus,.fg textarea:focus{
+      border-color:var(--cyan);
+      box-shadow:0 0 0 3px rgba(0,229,255,.08);
+    }
+    .fg-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+    .form-btn{
+      padding:1rem;
+      background:linear-gradient(135deg,var(--cyan),var(--violet));
+      color:#060c1a;font-weight:700;font-size:.9rem;
+      border:none;border-radius:12px;cursor:pointer;
+      transition:opacity .2s,transform .2s;letter-spacing:.5px;
+    }
+    .form-btn:hover{opacity:.85;transform:translateY(-1px);}
+
+    /* ──────────── FOOTER ──────────── */
+    footer{
+      padding:2rem 5rem;
+      border-top:1px solid var(--border);
+      display:flex;justify-content:space-between;align-items:center;
+      flex-wrap:wrap;gap:1rem;
+    }
+    .footer-left{font-size:.82rem;color:var(--muted);}
+    .footer-left b{color:var(--cyan);}
+    .footer-right{display:flex;gap:1rem;}
+    .footer-right a{
+      font-size:.8rem;color:var(--muted);text-decoration:none;
+      transition:color .2s;
+    }
+    .footer-right a:hover{color:var(--cyan);}
+
+    /* ──────────── ANIMATIONS ──────────── */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+    .hero-left{animation:fadeUp .7s ease both;}
+    .hero-right{animation:fadeUp .7s .18s ease both;}
+
+    /* ──────────── RESPONSIVE ──────────── */
+    @media(max-width:960px){
+      nav{padding:.9rem 1.5rem;}
+      .nav-links{gap:1.2rem;}
+      #home,section,footer{padding-left:1.5rem;padding-right:1.5rem;}
+      .hero-wrap{grid-template-columns:1fr;text-align:center;}
+      .hero-right{justify-content:center;}
+      .hero-btns,.hero-socials{justify-content:center;}
+      .hero-stats{justify-content:center;}
+      .about-inner{grid-template-columns:1fr 1fr;}
+      .proj-grid,.edu-grid,.contact-grid{grid-template-columns:1fr;}
+      .fg-row{grid-template-columns:1fr;}
+      .photo-container{width:280px;height:280px;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════ NAV ════ -->
+<nav>
+  <div class="nav-logo">VK<span>.</span></div>
+  <div class="nav-links">
+    <a href="#home">Home</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+    <a href="mailto:vikeshkr2ins@gmail.com" class="nav-hire">Hire Me</a>
+  </div>
+</nav>
+
+<!-- ════ HERO ════ -->
+<section id="home">
+  <div class="bg-grid"></div>
+  <div class="bg-glow1"></div>
+  <div class="bg-glow2"></div>
+  <div class="hero-wrap">
+
+    <div class="hero-left">
+      <div class="hero-tag"><span></span>Available for Opportunities</div>
+      <h1 class="hero-name">
+        <div class="first">Vikesh</div>
+        <div class="last">Kumar</div>
+      </h1>
+      <p class="hero-role"><b>Cloud Engineer</b> &nbsp;·&nbsp; AWS &nbsp;·&nbsp; DevOps &nbsp;·&nbsp; Infrastructure Automation</p>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num">1.6<span style="font-size:.9rem">yr</span></span>
+          <span class="stat-label">Experience</span>
+        </div>
+        <div class="stat-div"></div>
+        <div class="stat">
+          <span class="stat-num">2+</span>
+          <span class="stat-label">Projects</span>
+        </div>
+        <div class="stat-div"></div>
+        <div class="stat">
+          <span class="stat-num">99.9<span style="font-size:.9rem">%</span></span>
+          <span class="stat-label">Uptime SLA</span>
+        </div>
+        <div class="stat-div"></div>
+        <div class="stat">
+          <span class="stat-num">8.2</span>
+          <span class="stat-label">CGPA</span>
+        </div>
+      </div>
+
+      <p class="hero-desc">
+        Hands-on Cloud Engineer with expertise in designing and scaling AWS infrastructure,
+        automating deployments via Jenkins &amp; GitLab CI, containerizing workloads with Docker,
+        and maintaining 99.9% uptime using Zabbix monitoring on Linux environments.
+      </p>
+
+      <div class="hero-btns">
+        <a href="#projects" class="btn-cta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+          View Projects
+        </a>
+        <a href="#contact" class="btn-ghost">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Get in Touch
+        </a>
+      </div>
+
+      <div class="hero-socials">
+        <a href="https://www.linkedin.com/in/vikesh-kumar-41174a1ba/" target="_blank" class="soc-btn">
+          <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://github.com/vikeshkumar8210" target="_blank" class="soc-btn">
+          <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub
+        </a>
+        <a href="mailto:vikeshkr2ins@gmail.com" class="soc-btn">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Email
+        </a>
+      </div>
+    </div>
+
+    <!-- ════ PHOTO SECTION START ════ -->
+    <div class="hero-right">
+      <div class="photo-container">
+        <div class="orbit"><div class="orbit-dot"></div></div>
+        <div class="photo-ring"><div class="photo-ring-inner"></div></div>
+
+        <!-- ==========================================
+             VIKESH KUMAR - PROFILE PHOTO
+             Yahan pe neeche src="..." mein
+             aapki nayi photo ka base64 data hai.
+             Agar photo badalni ho to sirf is
+             img tag ka src replace karein.
+             object-position: center 10% se
+             face circle ke centre mein aata hai.
+             ========================================== -->
+        <img
+          class="hero-img"
+          src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAFQAVADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDEooor6A+UCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKwvEnjPTfDKN9on8yfb8sMded3nxp1CeZksra1jT/caVq5Z4mEHZvU9GjgK9ZXSsvM9horxR/idqk7r9ovEg/upaJUM3i281Xc8V5cb0/wCeb+VsrH65Hojq/syXWaR7jRXhX/CeaxpyfPPdf9tHauq8N/FTz0RL395/tyfLVQxUJbqxnUyypBXi7npdFZ2leIbHWfkt5fn/ALklaCOr12RkpHmSg4O0lYWiiiqMwooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiis7Xtet/D9g1xcf8BSpclFOTLhCVWShBXbLF/qVrpsPm3c6wJXA+JPivCiNb6fBLI7/ACb65PWPEN5rly0ssvl1z9zqVjazfPcvv/uQJuavFqYuU7xWiPrsPllOglKprL8EXrlGk3XFwyb933P9b/31/dpsNnq2o/P9paC1Tdtfevyf99bqjsPE8iOv2LSrqT/tt5X/AKDWkl/rk7yzPpiQJ/00RpW/8erFJWKqVJNu5Vh8MRz/AH7yW72fe8j71SXKW8cLRW/myfL/AH23p/wFvlp154njsf8Aj7iuoJ/+mln8v/oVczc+NoZ33+Va793yv/C9DaiZrmkXEea1udkMEsiO3+pdN2//AICrVam1jT4H+SdrCf8AuXaMv/oStXI3PjBvm+Xy/wDcf5arv4q8xNjtLJ/vvurP2kToVOcjsLPWLexdXS88ufdv2fw10lh8Wr7Tf4ku0ryX+1Vnh2bV2f8ATP5ar/aWg+eJqhYhw+E2+qRqq09T628K+LbHxbYebaN5c6f622/iStuvkDQfFt1o9/Fd287wTp9146+jPBPxLsfE9tFFcOlpqP8Ac/hf/dr1cNjVV9yej/M8HG5VKh+8o6x/FHZ0UUV6h4AUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAQXl5DpttLcXDeXAi72evE/Gfi248Qal5u1ktU+6n+zWp4/8AFv8AaV+0ULeZZW/3U/hdv7zV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"
+          alt="Vikesh Kumar - Cloud Engineer"
+        />
+        <!-- ==========================================
+             PHOTO SECTION END
+             ========================================== -->
+
+        <div class="float-badge b1">
+          <div class="float-dot" style="background:#10f5a0;"></div>
+          <span>Cloud Engineer</span>
+        </div>
+        <div class="float-badge b2">
+          <div class="float-dot" style="background:#00e5ff;"></div>
+          <span>DevOps Engineer</span>
+        </div>
+      </div>
+    </div>
+    <!-- ════ PHOTO SECTION END ════ -->
+
+  </div>
+</section>
+
+<!-- ════ ABOUT STRIP ════ -->
+<div class="about-strip">
+  <div class="about-inner">
+    <div class="about-text">
+      <p>I specialize in building and maintaining <strong style="color:var(--text)">reliable cloud infrastructure</strong> on AWS — from VPC design and CI/CD pipelines to container orchestration and proactive monitoring — helping teams ship faster and sleep better.</p>
+    </div>
+    <div class="about-metric">
+      <div class="metric-num">25%</div>
+      <div class="metric-label">Manual effort reduced</div>
+    </div>
+    <div class="about-metric">
+      <div class="metric-num">60%</div>
+      <div class="metric-label">Deploy effort cut</div>
+    </div>
+    <div class="about-metric">
+      <div class="metric-num">40%</div>
+      <div class="metric-label">Release issues down</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ SKILLS ════ -->
+<section id="skills">
+  <div class="si">
+    <div class="sec-eyebrow">Tech Stack</div>
+    <h2 class="sec-title">Skills &amp; <span>Technologies</span></h2>
+    <div class="skills-outer">
+
+      <div class="skill-row">
+        <div class="skill-row-icon" style="background:rgba(0,229,255,.1);">☁</div>
+        <div class="skill-row-body">
+          <div class="skill-row-title">Cloud &amp; Infrastructure</div>
+          <div class="tags">
+            <span class="tag tag-cyan">AWS EC2</span>
+            <span class="tag tag-cyan">AWS S3</span>
+            <span class="tag tag-cyan">AWS VPC</span>
+            <span class="tag tag-cyan">Load Balancers</span>
+            <span class="tag tag-cyan">Security Groups</span>
+            <span class="tag tag-cyan">Route Tables</span>
+            <span class="tag tag-cyan">Supabase (Self-Hosted)</span>
+            <span class="tag tag-cyan">Nginx</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-row">
+        <div class="skill-row-icon" style="background:rgba(139,92,246,.1);">⚙</div>
+        <div class="skill-row-body">
+          <div class="skill-row-title">DevOps &amp; CI/CD</div>
+          <div class="tags">
+            <span class="tag tag-violet">Jenkins</span>
+            <span class="tag tag-violet">GitLab CI</span>
+            <span class="tag tag-violet">CI/CD Pipelines</span>
+            <span class="tag tag-violet">Docker</span>
+            <span class="tag tag-violet">Git &amp; GitHub</span>
+            <span class="tag tag-violet">Zabbix Monitoring</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-row">
+        <div class="skill-row-icon" style="background:rgba(16,245,160,.08);">🐍</div>
+        <div class="skill-row-body">
+          <div class="skill-row-title">Programming &amp; Scripting</div>
+          <div class="tags">
+            <span class="tag tag-green">Python</span>
+            <span class="tag tag-green">Bash Scripting</span>
+            <span class="tag tag-green">YAML</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-row">
+        <div class="skill-row-icon" style="background:rgba(255,107,53,.08);">🖥</div>
+        <div class="skill-row-body">
+          <div class="skill-row-title">Operating Systems</div>
+          <div class="tags">
+            <span class="tag tag-orange">RHEL</span>
+            <span class="tag tag-orange">Ubuntu</span>
+            <span class="tag tag-orange">CentOS</span>
+            <span class="tag tag-orange">Windows Server</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-row">
+        <div class="skill-row-icon" style="background:rgba(122,149,176,.08);">🌐</div>
+        <div class="skill-row-body">
+          <div class="skill-row-title">Networking</div>
+          <div class="tags">
+            <span class="tag tag-grey">TCP/IP</span>
+            <span class="tag tag-grey">DNS</span>
+            <span class="tag tag-grey">HTTP / UDP</span>
+            <span class="tag tag-grey">VPN</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════ EXPERIENCE ════ -->
+<section id="experience">
+  <div class="si">
+    <div class="sec-eyebrow">Work History</div>
+    <h2 class="sec-title">Professional <span>Experience</span></h2>
+    <div class="exp-block">
+      <div class="exp-top">
+        <div class="exp-left">
+          <div class="exp-co">Seshasai Technologies Limited</div>
+          <div class="exp-designation">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Cloud Engineer
+          </div>
+        </div>
+        <div class="exp-right">
+          <div class="exp-duration">1.6 Years Experience</div>
+          <div class="exp-location">📍 Bangalore, India</div>
+        </div>
+      </div>
+      <div class="exp-divider"></div>
+      <ul class="exp-list">
+        <li>Designed, implemented, and managed <strong style="color:var(--text)">secure, scalable AWS cloud infrastructure</strong> for business-critical applications.</li>
+        <li>Automated provisioning, deployment, and backup workflows using Python scripts — <strong style="color:var(--green)">reducing manual effort by 25%</strong>.</li>
+        <li>Managed VPCs, subnets, security groups, load balancers, and route tables for optimized networking and security posture.</li>
+        <li>Integrated AWS resources with <strong style="color:var(--text)">CI/CD pipelines (Jenkins, GitLab CI)</strong> to streamline deployments and cut release times significantly.</li>
+        <li>Implemented <strong style="color:var(--text)">Zabbix monitoring</strong> for servers, networks, and applications — ensuring proactive incident detection and <strong style="color:var(--green)">99.9% uptime</strong>.</li>
+        <li>Troubleshot TCP/IP networking, DNS, and HTTP/UDP issues to maintain seamless connectivity and application performance.</li>
+        <li>Collaborated with cross-functional teams to align infrastructure with application development and testing requirements.</li>
+        <li>Conducted system performance tuning, capacity planning, and cost optimization for cloud resources.</li>
+      </ul>
+      <div class="exp-chips">
+        <span class="tag tag-cyan">AWS</span>
+        <span class="tag tag-violet">Jenkins</span>
+        <span class="tag tag-violet">GitLab CI</span>
+        <span class="tag tag-violet">Docker</span>
+        <span class="tag tag-green">Python</span>
+        <span class="tag tag-orange">RHEL</span>
+        <span class="tag tag-grey">Zabbix</span>
+        <span class="tag tag-grey">TCP/IP</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ PROJECTS ════ -->
+<section id="projects">
+  <div class="si">
+    <div class="sec-eyebrow">Portfolio</div>
+    <h2 class="sec-title">Featured <span>Projects</span></h2>
+    <div class="proj-grid">
+
+      <div class="proj-card c1">
+        <div class="proj-num">Project 01</div>
+        <div class="proj-name">Jenkins CI/CD with GitHub Integration</div>
+        <div class="proj-chips">
+          <span class="tag tag-cyan">AWS</span>
+          <span class="tag tag-violet">Docker</span>
+          <span class="tag tag-violet">Jenkins</span>
+          <span class="tag tag-grey">Git / GitHub</span>
+        </div>
+        <ul class="proj-list">
+          <li>Developed and maintained Jenkins CI/CD pipelines integrated with GitHub for fully automated build and deployment workflows.</li>
+          <li>Implemented Docker-based deployment processes on AWS, improving deployment consistency and reliability across environments.</li>
+          <li>Integrated automated testing, security scanning, and Slack notifications into the pipeline for end-to-end quality control.</li>
+        </ul>
+        <div class="proj-impact">
+          <span class="impact-chip ic1">↓ 60% Deploy Effort</span>
+          <span class="impact-chip ic2">↓ 40% Release Issues</span>
+        </div>
+      </div>
+
+      <div class="proj-card c2">
+        <div class="proj-num">Project 02</div>
+        <div class="proj-name">Self-Hosted Supabase Infrastructure</div>
+        <div class="proj-chips">
+          <span class="tag tag-violet">Docker</span>
+          <span class="tag tag-cyan">AWS</span>
+          <span class="tag tag-grey">Nginx</span>
+          <span class="tag tag-orange">RHEL 10</span>
+          <span class="tag tag-green">Bash</span>
+        </div>
+        <ul class="proj-list">
+          <li>Deployed and managed a self-hosted Supabase instance on Red Hat Enterprise Linux 10 using Docker containers on AWS.</li>
+          <li>Configured Nginx as a reverse proxy for secure routing, TLS termination, and service accessibility.</li>
+          <li>Managed container operations, automated backups, troubleshooting, and system maintenance for high-availability performance.</li>
+          <li>Automated routine operational tasks and deployment workflows using Bash scripting.</li>
+        </ul>
+        <div class="proj-impact">
+          <span class="impact-chip ic3">High Availability</span>
+          <span class="impact-chip ic1">Automated Ops</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════ EDUCATION ════ -->
+<section id="education">
+  <div class="si">
+    <div class="sec-eyebrow">Academic</div>
+    <h2 class="sec-title">Education &amp; <span>Qualifications</span></h2>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-icon" style="background:rgba(0,229,255,.1);">🎓</div>
+        <div class="edu-body">
+          <div class="edu-deg">Bachelor of Engineering — Computer Science</div>
+          <div class="edu-inst">Sagar Institute of Science, Technology &amp; Engineering</div>
+          <div class="edu-meta">May 2023 &nbsp;·&nbsp; Bhopal, Madhya Pradesh</div>
+          <div class="edu-gpa">CGPA: 8.2 / 10.0</div>
+        </div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-icon" style="background:rgba(139,92,246,.1);">📚</div>
+        <div class="edu-body">
+          <div class="edu-deg">12th Standard — Science</div>
+          <div class="edu-inst">Jharkhand Academic Council</div>
+          <div class="edu-meta">May 2019 &nbsp;·&nbsp; Bokaro, Jharkhand</div>
+          <div class="edu-gpa">Percentage: 61.8%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ CONTACT ════ -->
+<section id="contact">
+  <div class="si">
+    <div class="sec-eyebrow">Let's Connect</div>
+    <h2 class="sec-title">Get In <span>Touch</span></h2>
+    <div class="contact-grid">
+      <div class="contact-left">
+        <p class="contact-sub">
+          I'm actively looking for new Cloud Engineering &amp; DevOps opportunities.
+          Whether it's a full-time role, freelance project, or a quick chat — my inbox is always open!
+        </p>
+        <div class="clinks">
+          <a href="mailto:vikeshkr2ins@gmail.com" class="clink">
+            <div class="clink-icon" style="background:rgba(0,229,255,.1);">✉️</div>
+            <div class="clink-info">
+              <div class="clink-label">Email</div>
+              <div class="clink-val">vikeshkr2ins@gmail.com</div>
+            </div>
+          </a>
+          <a href="tel:+918210768398" class="clink">
+            <div class="clink-icon" style="background:rgba(16,245,160,.1);">📞</div>
+            <div class="clink-info">
+              <div class="clink-label">Phone</div>
+              <div class="clink-val">+91 82107 68398</div>
+            </div>
+          </a>
+          <a href="https://www.linkedin.com/in/vikesh-kumar-41174a1ba/" target="_blank" class="clink">
+            <div class="clink-icon" style="background:rgba(0,119,181,.15);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#0077b5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </div>
+            <div class="clink-info">
+              <div class="clink-label">LinkedIn</div>
+              <div class="clink-val">vikesh-kumar-41174a1ba</div>
+            </div>
+          </a>
+          <a href="https://github.com/vikeshkumar8210" target="_blank" class="clink">
+            <div class="clink-icon" style="background:rgba(255,255,255,.05);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--text)"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            </div>
+            <div class="clink-info">
+              <div class="clink-label">GitHub</div>
+              <div class="clink-val">vikeshkumar8210</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <form class="contact-form" onsubmit="return false;">
+        <div class="fg-row">
+          <div class="fg">
+            <label>Your Name</label>
+            <input type="text" placeholder="John Doe"/>
+          </div>
+          <div class="fg">
+            <label>Email Address</label>
+            <input type="email" placeholder="john@email.com"/>
+          </div>
+        </div>
+        <div class="fg">
+          <label>Subject</label>
+          <input type="text" placeholder="Job Opportunity / Collaboration"/>
+        </div>
+        <div class="fg">
+          <label>Message</label>
+          <textarea rows="5" placeholder="Tell me about the role or project..."></textarea>
+        </div>
+        <button class="form-btn" type="submit">Send Message &nbsp;→</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ════ FOOTER ════ -->
+<footer>
+  <div class="footer-left">
+    © 2025 <b>Vikesh Kumar</b> · Cloud Engineer · Built with ♥
+  </div>
+  <div class="footer-right">
+    <a href="https://www.linkedin.com/in/vikesh-kumar-41174a1ba/" target="_blank">LinkedIn</a>
+    <a href="https://github.com/vikeshkumar8210" target="_blank">GitHub</a>
+    <a href="mailto:vikeshkr2ins@gmail.com">Email</a>
+  </div>
+</footer>
+
+</body>
+</html>
